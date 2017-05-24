@@ -6,7 +6,7 @@ Now, I recap with a second commit
 - create branch
 - make modif°
 - commit it
-- Pull
+- Pull request
 - Compare Master with Branch2
 - Accept modif°
 - delete Branch2
