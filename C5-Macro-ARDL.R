@@ -1,4 +1,4 @@
-# Empirical Macro Model of my THESIS
+# ARDL Macro Model of my THESIS
 #
 library(tseries)
 library(vars)
