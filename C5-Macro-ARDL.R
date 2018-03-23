@@ -7,6 +7,8 @@ library(urca)
 
 
 # Data --------------------------------------------------------------------
+  # set working Directory
+  setwd("C:/Users/Ferdi/Documents/R/WD")
 
 # Read data
 invraw1 <- read.csv("INV1_Accumulation_ofProducedAssetsGrossFixed.csv",head = TRUE, sep=",")
@@ -582,27 +584,27 @@ Summary(model1)
   # taylor0 <- auto.ardl( mpr~cpi+prod+reer, data=br_month, ymax=4, xmax=c(4,4,4), verbose=TRUE )
   #summary( taylor0 )
 
-# Data sets arangement
+# Data sets arangement (as a DATAFRAME)
+  c5dat <- data.frame(inv = ecmeq[,1], u = ecmeq[,2],
+                          r=ecmeq[,3], fi = ecmeq[,4], d = ecmeq[,5])
+  cdat<-ts(c5dat,start=c(1952,3), end=c(2016,4), frequency=4)
 
 #### 1952 - 2016
-c5dat <- data.frame(inv = ecmeq[,1], u = ecmeq[,2],
-                      r=ecmeq[,3], fi = ecmeq[,4], d = ecmeq[,5])
-cdat<-ts(c5dat,start=c(1952,3), end=c(2016,4), frequency=4)
-lvldata <- cdat
+  lvldata <- cdat
 #### 1952 - 2007
-lvldata <- window(cdat, start = c(1952,3), end=c(2007,2), frequency=4)
+  lvldata <- window(cdat, start = c(1952,3), end=c(2007,2), frequency=4)
 #### 1952 - 1987
-lvldata <- window(cdat, start = c(1952,3), end=c(1987,1), frequency=4)
-#### 1985 - 2016
-lvldata <- window(cdat, start = c(1987,1), end=c(2016,4), frequency=4)
+  lvldata <- window(cdat, start = c(1952,3), end=c(1987,1), frequency=4)
+  #### 1985 - 2016
+  lvldata <- window(cdat, start = c(1987,1), end=c(2016,4), frequency=4)
 #### 1985 - 2007
-lvldata <- window(cdat, start = c(1987,1), end=c(2007,2), frequency=4)
+  lvldata <- window(cdat, start = c(1987,1), end=c(2007,2), frequency=4)
 
 # LagSel 1 ----------------------------------------------------------------
 
   # 1st. Alternative : i~u.r.fi
-  c5select <- ardl::auto.ardl(inv~u+r+fi, data=lvldata, ymax=32,
-                           xmax=c(8,8,8),case=5,verbose = T)
+  c5select <- ardl::auto.ardl(inv~u+r+fi, data=lvldata, ymax=12,
+                           xmax=c(8,8,8),case=1,verbose = T)
   #1952-2016#Best model is inv ~ +1 + L(inv, 1) + L(inv, 2) + L(inv, 3) +
                       # L(inv, 4) + u + L(u, 1) + r + L(r, 1) +
                       # L(r, 2) + fi + L(fi, 1)
